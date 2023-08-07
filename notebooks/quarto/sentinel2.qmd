@@ -1,0 +1,241 @@
+---
+title: "Sentinel-2 data in R"
+format: gfm
+editor: visual
+---
+
+## Accessing data via STAC APIs
+
+The libraries we will use for this exercise are listed below.
+
+```{r libraries, message=FALSE, warning=FALSE}
+library(dplyr) # data wrangling
+library(gdalcubes) # on-demand data cubes
+library(ggplot2) # plotting
+library(knitr) # visualize URLs
+library(osmdata) # retrieving OSM data, AOI bounding box
+library(rstac) # connecting to the STAC API
+library(sf) # handle geospatial data frames
+library(stars) # handle spatio-temporal arrays
+```
+
+### Defining an extent
+
+We will obtain our area of interest with the `osmdata` package.
+
+```{r}
+aoi = getbb("poznan poland", format_out = "sf_polygon")
+```
+
+We can make sure the AOI is correct (run cell on source .qmd)
+
+```{r, eval = FALSE}
+mapview::mapview(aoi)
+```
+
+And lastly the time extent:
+
+```{r}
+time_extent = c("2022-04-01", "2022-10-01")
+```
+
+We compute the bounding box both in EPSG:4326 and EPSG:3857.
+
+```{r}
+bb4326 = st_bbox(aoi)
+bb3857 = aoi |> 
+  st_transform(3857) |> 
+  st_bbox()
+```
+
+### Querying data with `rstac`
+
+Similarly to the `pystac-client` in Python, with [`rstac`](https://brazil-data-cube.github.io/rstac/index.html) we define our STAC API URL, from where we can query the collections available.
+
+Let's stay with the earth-search API.
+
+```{r}
+s = stac("https://earth-search.aws.element84.com/v0")
+collections(s) |> get_request()
+```
+
+To search for the data we will refer to the parameters we defined during the extent definition.
+
+```{r}
+items = s  |> 
+    stac_search(
+      collections = "sentinel-s2-l2a-cogs",
+      bbox = c(
+        bb4326["xmin"], bb4326["ymin"], 
+        bb4326["xmax"], bb4326["ymax"]
+      ), 
+      datetime = paste0(time_extent, collapse = "/"),
+      limit = 500
+    ) |> 
+    post_request() 
+
+items
+```
+
+::: callout-note
+## Quiz
+Can you spot the difference between the search exercise with Python and R?
+:::
+
+We can explore the items as `sf` objects:
+
+```{r}
+(i = items_as_sf(items))
+```
+
+And easily view the cloud cover for the area:
+
+```{r}
+ggplot(i) +
+  aes(x = as.Date(datetime), y = `eo:cloud_cover`) +
+  geom_point() +
+  geom_line(group = 1) +
+  scale_x_date(date_breaks = "2 months")
+```
+
+The item properties can prove useful to filter the data collection we just obtained.
+
+Let's take a look at the properties present.
+
+```{r}
+items$features[[1]]$properties
+```
+
+We already explored the `eo:cloud_cover` property, but there are other properties that might turn out useful, e.g. `sentinel:valid_cloud_cover` and `sentinel:data_coverage`.
+
+We can filter the sf object we created before for this values and select the first item from our result.
+
+```{r}
+ids = i |> 
+  mutate(fid = row_number()) |> 
+  filter(
+    `sentinel:valid_cloud_cover` == 1, 
+    `sentinel:data_coverage` >= 80,
+    `eo:cloud_cover` == min(`eo:cloud_cover`)
+  ) |> 
+  pull(fid)
+item = items$features[[ids[1]]]
+```
+
+We can take a look at a preview of one item by getting the URL of the *thumbnail* asset. Note that `rstac` has a [`preview_plot`](https://brazil-data-cube.github.io/rstac/reference/preview_plot.html) function but it does not accept JPG formats yet.
+
+```{r}
+item |> 
+  assets_url(asset_names = "thumbnail") |> 
+  include_graphics()
+```
+
+### Creating a STAC data cube
+
+Once we have made our query and fetched the data, we can create an on-demand data cube with [`gdalcubes`](https://gdalcubes.github.io/).
+
+We can filter the times collection with the `property_filter` parameter. As we saw before we will keep only scenes with valid cloud cover values below 10%.
+
+```{r}
+assets = c(
+  "B01","B02","B03","B04","B05","B06",
+  "B07","B08","B8A","B09","B11","SCL"
+)
+col = stac_image_collection(
+  items$features,
+  asset_names = assets,
+  property_filter = function(x) {x[["eo:cloud_cover"]] < 10 & x[['sentinel:valid_cloud_cover']]}
+)
+col
+```
+
+### Visualizing the data
+
+To view the data, we create a `cube_view()` object considering the AOI defined before *but with EPSG:3857*.
+
+Arguments `dx` and `dy` define the spatial resolution of our output, while `dt` corresponds to the temporal resolution.
+
+::: callout-note
+## Quiz
+How would you define a biweekly temporal interval? Hint `?cube_view()`.
+:::
+
+```{r}
+v = cube_view(
+  srs = "EPSG:3857",  
+  extent = list(t0 = time_extent[1],
+                t1 = time_extent[2],
+                left = bb3857["xmin"],
+                bottom = bb3857["ymin"], 
+                right = bb3857["xmax"],
+                top = bb3857["ymax"]),
+  dx = 200, dy = 200, dt = "P1D",
+  aggregation = "median",
+  resampling = "average"
+)
+```
+
+A cloud mask can also be defined. This will be based on the SCL values.
+
+For that let's first expand on [SCL](https://sentinels.copernicus.eu/web/sentinel/technical-guides/sentinel-2-msi/level-2a/algorithm-overview), which is the result of the Sentinel-2 scene classification.
+
+We will use the `stars` package to visualize the layer. But first we let's select an item with moderate cloud cover to have an idea of the values present.
+
+```{r}
+ids = i |> 
+  mutate(fid = row_number()) |> 
+  filter(
+    `sentinel:valid_cloud_cover` == 1, 
+    `sentinel:data_coverage` >= 90,
+    `eo:cloud_cover` <= 50
+  ) |> 
+  pull(fid)
+item = items$features[[ids[1]]]
+
+scl_ex = item |> 
+  assets_url(asset_names = "SCL", append_gdalvsi = TRUE) |>
+  read_stars(RasterIO = list(nBufXSize = 512, nBufYSize = 512))
+```
+
+In the data folder of this repo I added a CSV file with the SCL classes that we will use for plotting.
+
+```{r}
+scl = read.csv("../../data/SCL_classes.csv")
+scl = scl |> 
+  mutate(label = paste(code, desc, sep = ": "))
+scl_pal = scl$color
+names(scl_pal) = scl$label
+scl_ex_factor = scl_ex |> 
+  mutate(
+      SCL.tif = factor(SCL.tif, levels = scl$code, labels = scl$label)
+    )
+ggplot() +
+  geom_stars(data = scl_ex_factor) +
+  scale_fill_manual(values = scl_pal) +
+  theme_void()
+```
+
+We can then see that masking out clouds would require to reference classes 3, 8 and 9.
+
+```{r}
+# clouds and cloud shadows
+S2.mask = image_mask("SCL", values=c(3,8,9)) 
+```
+
+Finally, we can visualize a median composite of our collection. This particular chunk will take a while since the data is fetched from the cloud before plotting. For this reason we include the `gdalcubes_options(parallel = 4)` line which would use any parallel processing available in your system. We will run this code chunk interactively.
+
+```{r, eval = FALSE}
+gdalcubes_options(parallel = 4) 
+raster_cube(col, v, mask = S2.mask) |> 
+    select_bands(c("B02","B03","B04")) |> 
+    reduce_time(c("median(B02)", "median(B03)", "median(B04)")) |> 
+    plot(rgb = 3:1, zlim=c(0,1800)) 
+```
+
+### Downloading data
+
+Nowadays, there is a lot that can be done to process data on the cloud. However, if you still need to download datasets, `rstac` will have you covered with the `assets_download()` function. This will download all of the items from your search, so make sure you apply enough filtering so that you don't download data that you don't need. [More info on the function can be found on the package documentation](https://brazil-data-cube.github.io/rstac/reference/assets_functions.html).
+
+## Further resources:
+
+This notebook is a small demo on how to use `rstac` and `gdalcubes` to work with Sentinel-2 data in particular. For further examples on data processing with both packages check [Marius Appel repository from the OpenGeoHub 2021](https://github.com/appelmar/ogh2021).
