@@ -1,0 +1,10 @@
+# Sentinel-2 Quick Facts
+
+- High spatial resolution (10m-60m) optical imagery systematically acquired over land and coastal waters.
+- Two satellites are in orbit (A and B) and a third one (Sentinel-C) will be launched in 2024.
+- Multispectral data with 13 bands in the visible, near infrared, and short wave infrared part of the spectrum.
+- Free and open data policy.
+
+- ![](https://sentinels.copernicus.eu/documents/247904/4180891/Sentinel-2-infographic-tm.jpg)
+
+- Read more: [ESA website](https://sentinels.copernicus.eu/web/sentinel/missions/sentinel-2) and [Wikipedia entry](https://en.wikipedia.org/wiki/Sentinel-2)
