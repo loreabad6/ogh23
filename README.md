@@ -1,17 +1,27 @@
-# Set-up
+# Tools and packages to query and process Sentinel-1 and Sentinel-2 data with R and Python
 
-## Docker
+Wednesday, August 30th, 2023
+
+## Part 1: 9h00-10h30
+We will focus on this session on Sentinel-2 data and the STAC API going back and forth between R and Python environments. 
+
+## Part 2: 11h00-1h30
+After the break we will take a look at Sentinel-2 data, specifically tools to query data for subsequent large processing in Python and some basic data analysis with Google Earth Engine via R.
+
+## Set-up
+
+### Docker
 Since installations of R, but mostly Python, can be complicated, I recommend using Docker for this tutorial. To use them, please download and install Docker Engine/Desktop:
 
-Linux: https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository
-Windows: https://docs.docker.com/docker-for-windows/install/
-Mac: https://docs.docker.com/docker-for-mac/install/
+- Linux: https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository
+- Windows: https://docs.docker.com/docker-for-windows/install/
+- Mac: https://docs.docker.com/docker-for-mac/install/
 
 Once you have installed this, start the docker engine. 
 
-There are two Dockerfiles for this tutorial:
+There are two Dockerfiles for this tutorial.
 
-### Python environment: 
+#### Python environment: 
 
 We will work on a minimal Jupyter notebook image enhanced with some geospatial flavor and the specific requirements for this lesson.
 
@@ -29,7 +39,6 @@ docker build -t pyenv .
 ```
 
 4. Run the Docker container. Note that `--rm` will remove the container when you quit. 
-
 ```
 cd ../..
 docker run --name ogh-pyenv --rm -it -p 8888:8888 -v $PWD/:/home/jovyan pyenv 
@@ -39,21 +48,20 @@ docker run --name ogh-pyenv --rm -it -p 8888:8888 -v $PWD/:/home/jovyan pyenv
 
 To stop the notebook environment go back to the terminal and `CTRL+C`.
 
-### R environment:
+#### R environment:
 
 For the R environment we will run a RStudio cloud instance. Given that you already followed steps 1 and 2 for the Python environment:
 
 1. Build the Docker image:
-
 ```
-cd dockerfiles/pyenv
+cd dockerfiles/renv
 docker build -t renv . 
 ```
 
 2. Run the Docker container
 ```
 cd ../..
-docker run --name ogh-renv --rm -e DISABLE_AUTH=TRUE -e USERID=$UID -p 8786:8787 -v $PWD/:/home/rstudio/ogh/ renv
+docker run --name ogh-renv --rm -e DISABLE_AUTH=TRUE -e USERID=$UID -p 8786:8787 -v $PWD/:/home/rstudio/ogh23/ renv
 ```
 
 3. Go to your browser and type: http://localhost:8786/. Now you have an RStudio interface on your browser!
@@ -62,8 +70,7 @@ To stop the RStudio environment go back to the terminal and `CTRL+C`.
 
 Since we are going back and forth with the tutorials, it would be good if you can run both containers at the same time. In simple terms this means you can execute docker run in two different command line windows and then have Jupyter Notebooks and RStudio cloud open in two tabs. Please test that this works for you before the tutorial. 
 
-
-## Alternatives
+### Alternatives
 
 If you want to work on your own local machine and do the manual installations, refer to the Dockerfiles for the specific requirements for the R and Python environments. 
 
