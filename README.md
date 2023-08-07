@@ -5,8 +5,8 @@ Wednesday, August 30th, 2023
 ## Part 1: 9h00-10h30
 We will focus on this session on Sentinel-2 data and the STAC API going back and forth between R and Python environments. 
 
-## Part 2: 11h00-1h30
-After the break we will take a look at Sentinel-2 data, specifically tools to query data for subsequent large processing in Python and some basic data analysis with Google Earth Engine via R.
+## Part 2: 11h00-12h30
+After the break we will take a look at Sentinel-1 data, specifically tools to query data for subsequent large processing and some basic data analysis in Python.
 
 ## Set-up
 
