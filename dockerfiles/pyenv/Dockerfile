@@ -48,10 +48,19 @@ RUN pip install geopandas
 RUN pip install matplotlib folium mapclassify
 
 RUN pip install pandas xarray rioxarray geocube geogif
-RUN pip install asf_search pystac-client sentinelsat
+RUN pip install asf_search pystac-client
 RUN pip install stackstac
 RUN pip install --upgrade 'stackstac[viz]'
-## RUN pip install xsar ## builds its own gdal wheel... avoid
-## RUN pip install git+https://github.com/pbrotoisworo/s1-tops-split-analyzer.git
+
+# setup for earthengine
+RUN     pip install pyasn1 --upgrade
+RUN     pip install --upgrade setuptools && \
+        pip install google-api-python-client && \
+        pip install --upgrade oauth2client && \
+        pip install pyCrypto && \
+        apt-get install -y libssl-dev
+        
+RUN     pip install earthengine-api      
+RUN     pip install earthengine-api --upgrade
 
 WORKDIR /home/jovyan
