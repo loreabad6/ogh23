@@ -51,16 +51,6 @@ RUN pip install pandas xarray rioxarray geocube geogif
 RUN pip install asf_search pystac-client
 RUN pip install stackstac
 RUN pip install --upgrade 'stackstac[viz]'
-
-# setup for earthengine
-RUN     pip install pyasn1 --upgrade
-RUN     pip install --upgrade setuptools && \
-        pip install google-api-python-client && \
-        pip install --upgrade oauth2client && \
-        pip install pyCrypto && \
-        apt-get install -y libssl-dev
-        
-RUN     pip install earthengine-api      
-RUN     pip install earthengine-api --upgrade
+RUN pip install awscli
 
 WORKDIR /home/jovyan
