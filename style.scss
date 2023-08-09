@@ -1,0 +1,21 @@
+/*-- scss:defaults --*/
+
+// fonts
+
+// colors
+$body-bg: #e6eefc !default;
+$body-color: #000 !default;
+$link-color: #f7ae40 !default;
+$selection-bg: #e8ca9e !default;
+
+// headings
+$presentation-heading-color: #063945 !default;
+$presentation-heading-font-weight: 600;
+$presentation-h1-font-size: 1.75em !default;
+$presentation-title-slide-text-align: center;
+
+/*-- scss:rules --*/
+
+.reveal a {
+  line-height: 1.3em;
+}
