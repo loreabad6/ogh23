@@ -1,6 +1,9 @@
 ---
 title: "Sentinel-2 data in R"
-format: gfm
+subtitle: "OpenGeoHub Summer School 2023"
+author: Lorena Abad
+date: "2023-08-30"
+format: html
 editor: visual
 ---
 
@@ -8,10 +11,14 @@ editor: visual
 
 The libraries we will use for this exercise are listed below.
 
-```{r libraries, message=FALSE, warning=FALSE}
+```{r}
+#| label: libraries
+#| message: false
+#| warning: false
 library(dplyr) # data wrangling
 library(gdalcubes) # on-demand data cubes
 library(ggplot2) # plotting
+library(here) # resolve relative paths
 library(knitr) # visualize URLs
 library(osmdata) # retrieving OSM data, AOI bounding box
 library(rstac) # connecting to the STAC API
@@ -24,12 +31,20 @@ library(stars) # handle spatio-temporal arrays
 We will obtain our area of interest with the `osmdata` package.
 
 ```{r}
+#| eval: false
+## 405 error last time tested
 aoi = getbb("poznan poland", format_out = "sf_polygon")
+```
+
+```{r}
+## backup geojson
+aoi = read_sf(here("data/poznan.geojson"))
 ```
 
 We can make sure the AOI is correct (run cell on source .qmd)
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
 mapview::mapview(aoi)
 ```
 
@@ -78,7 +93,8 @@ items
 ```
 
 ::: callout-note
-## Quiz
+#### Quiz
+
 Can you spot the difference between the search exercise with Python and R?
 :::
 
@@ -156,7 +172,8 @@ To view the data, we create a `cube_view()` object considering the AOI defined b
 Arguments `dx` and `dy` define the spatial resolution of our output, while `dt` corresponds to the temporal resolution.
 
 ::: callout-note
-## Quiz
+#### Quiz
+
 How would you define a biweekly temporal interval? Hint `?cube_view()`.
 :::
 
@@ -224,7 +241,8 @@ S2.mask = image_mask("SCL", values=c(3,8,9))
 
 Finally, we can visualize a median composite of our collection. This particular chunk will take a while since the data is fetched from the cloud before plotting. For this reason we include the `gdalcubes_options(parallel = 4)` line which would use any parallel processing available in your system. We will run this code chunk interactively.
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
 gdalcubes_options(parallel = 4) 
 raster_cube(col, v, mask = S2.mask) |> 
     select_bands(c("B02","B03","B04")) |> 
@@ -236,6 +254,11 @@ raster_cube(col, v, mask = S2.mask) |>
 
 Nowadays, there is a lot that can be done to process data on the cloud. However, if you still need to download datasets, `rstac` will have you covered with the `assets_download()` function. This will download all of the items from your search, so make sure you apply enough filtering so that you don't download data that you don't need. [More info on the function can be found on the package documentation](https://brazil-data-cube.github.io/rstac/reference/assets_functions.html).
 
-## Further resources:
+## Exercises
+
+1.  Based on the examples from the Jupyter notebook, how would you compute the NDVI anomaly with `gdalcubes`? Go ahead and do it for any area of interest you would like. Get some *hints* from [this r-spatial blog on gdalcubes by Marius Appel](https://r-spatial.org//r/2019/07/18/gdalcubes1.html).
+2.  Compute a time series of NDVI values for one crop parcel of your choice. *Hint*: you can easily create a geojson polygon with <https://geojson.io/>. Take the temporal grouping of your choice, but what would make sense to compare such vegetation values?
+
+## More resources:
 
 This notebook is a small demo on how to use `rstac` and `gdalcubes` to work with Sentinel-2 data in particular. For further examples on data processing with both packages check [Marius Appel repository from the OpenGeoHub 2021](https://github.com/appelmar/ogh2021).
