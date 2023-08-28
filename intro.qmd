@@ -2,7 +2,7 @@
 title: "Tools and packages to query and process Sentinel-1 and Sentinel-2 data with R and Python"
 subtitle: "**OpenGeoHub 2023**<br>Processing and visualizing large geospatial data using R, Python and Julia"
 author: Lorena Abad
-date: "2023-08-30"
+date: "2023-08-31"
 format: 
   revealjs:
       theme: [default, style.scss]
@@ -14,15 +14,13 @@ title-slide-attributes:
 
 # Plan for today
 
-**Part 1 (9h00-10h30)**
+**Part 1 (Thu. 31.08. - 13h30-15h00)**
 
 - Quick intro slides 
 - Hands-on: Exploring Sentinel-1 data with Python
 - Questions and exercises
 
-BREAK! 
-
-**Part 2 (11h00-12h00)**
+**Part 2 (Fri. 01.09. - 09h00-10h30)**
 
 - Hands-on: Exploring Sentinel-2 data with R and Python
 - Questions and exercises

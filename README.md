@@ -1,12 +1,12 @@
 # Tools and packages to query and process Sentinel-1 and Sentinel-2 data with R and Python
 
-Wednesday, August 30th, 2023
+Wednesday, Aug. 31th & Sept. 1st 2023
 
-## Part 1: 9h00-10h30
+## Part 1: Thu. 31.08. - 13h30-15h00
 During this session we will take a look at Sentinel-1 data, specifically tools to query data for subsequent large processing and some basic data analysis in Python.
 
-## Part 2: 11h00-12h30
-After the break we will focus on Sentinel-2 data and the STAC API going back and forth between R and Python environments. 
+## Part 2: Fri. 01.09. - 09h00-10h30
+On Friday, we will focus on Sentinel-2 data and the STAC API going back and forth between R and Python environments. 
 
 ## Set-up
 
