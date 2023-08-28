@@ -73,5 +73,3 @@ Since we are going back and forth with the tutorials, it would be good if you ca
 ### Alternatives
 
 If you want to work on your own local machine and do the manual installations, refer to the Dockerfiles for the specific requirements for the R and Python environments. 
-
-I will set-up a binder for the repository. However, this can become sometimes slow and not so easy to interact with. Use this as a last resource. 
