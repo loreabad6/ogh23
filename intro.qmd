@@ -1,8 +1,9 @@
 ---
 title: "Tools and packages to query and process Sentinel-1 and Sentinel-2 data with R and Python"
 subtitle: "**OpenGeoHub 2023**<br>Processing and visualizing large geospatial data using R, Python and Julia"
-author: Lorena Abad
+author: "Lorena Abad <br> PhD researcher, Department of Geoinformatics - Z_GIS, University of Salzburg"
 date: "2023-08-31"
+date-format: full
 format: 
   revealjs:
       theme: [default, style.scss]
@@ -12,7 +13,7 @@ title-slide-attributes:
   data-background-opacity: "0.25"
 ---
 
-# Plan for today
+# Plan for the sessions
 
 **Part 1 (Thu. 31.08. - 13h30-15h00)**
 
@@ -77,5 +78,3 @@ Read more: [ESA website](https://sentinels.copernicus.eu/web/sentinel/missions/s
 
 
 # Let's get to it!
-
-# Discussion
