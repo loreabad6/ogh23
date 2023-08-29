@@ -7,6 +7,7 @@ date-format: full
 format: 
   revealjs:
       theme: [default, style.scss]
+      embed-resources: true
 smaller: true
 title-slide-attributes:
   data-background-image: "figs/2023-03-02-00_00_2023-03-02-23_59_Sentinel-2_L2A_SWIR.png"
