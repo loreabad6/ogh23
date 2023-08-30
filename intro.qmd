@@ -70,6 +70,11 @@ From: Ian H. Woodhouse from Earthblox, ["The impact of the Sentinel-1B failure a
 
 From: Ian H. Woodhouse from Earthblox, ["The impact of the Sentinel-1B failure and looking forward to Sentinel-1C"](https://www.earthblox.io/blog/the-impact-of-the-sentinel-1b-failure-and-looking-forward-to-sentinel-1c), 2022.
 
+::: {.notes}
+Gap over Russia is political, not operational...
+:::
+
+
 # Sentinel-2 Quick Facts
 
 :::: {.columns}
