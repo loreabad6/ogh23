@@ -52,5 +52,6 @@ RUN pip install asf_search pystac-client
 RUN pip install stackstac
 RUN pip install --upgrade 'stackstac[viz]'
 RUN pip install awscli
+RUN pip install nbconvert
 
 WORKDIR /home/jovyan
