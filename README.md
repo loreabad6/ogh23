@@ -5,8 +5,12 @@ Wednesday, Aug. 31th & Sept. 1st 2023
 ## Part 1: Thu. 31.08. - 13h30-15h00
 During this session we will take a look at Sentinel-1 data, specifically tools to query data for subsequent large processing and some basic data analysis in Python.
 
+You can browse the material [here](https://loreabad6.github.io/ogh23/notebooks/jupyter/sentinel1.html).
+
 ## Part 2: Fri. 01.09. - 09h00-10h30
 On Friday, we will focus on Sentinel-2 data and the STAC API going back and forth between R and Python environments. 
+
+You can browse the [R material here](https://loreabad6.github.io/ogh23/notebooks/quarto/sentinel2.html) and the [Python material here](https://loreabad6.github.io/ogh23/notebooks/jupyter/sentinel2.html).
 
 ## Set-up
 
