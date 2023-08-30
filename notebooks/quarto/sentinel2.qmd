@@ -3,8 +3,11 @@ title: "Sentinel-2 data in R"
 subtitle: "OpenGeoHub Summer School 2023"
 author: Lorena Abad
 date: "2023-08-30"
-format: html
+format: 
+  html:
+    embed-resources: true
 editor: visual
+eval: false
 ---
 
 ## Accessing data via STAC APIs
