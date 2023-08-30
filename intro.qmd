@@ -58,6 +58,18 @@ title-slide-attributes:
 
 Read more: [ESA website](https://sentinels.copernicus.eu/web/sentinel/missions/sentinel-1) and [Wikipedia entry](https://en.wikipedia.org/wiki/Sentinel-1)
 
+# Sentinel-1B mal-function
+
+![](https://uploads-ssl.webflow.com/60d1d38b8d988b72add3acc5/62fcaed4d56a117f8d894550_Sentinel-1B-image1-earth-blox.png)
+
+From: Ian H. Woodhouse from Earthblox, ["The impact of the Sentinel-1B failure and looking forward to Sentinel-1C"](https://www.earthblox.io/blog/the-impact-of-the-sentinel-1b-failure-and-looking-forward-to-sentinel-1c), 2022.
+
+# Sentinel-1B mal-function
+
+![](https://uploads-ssl.webflow.com/60d1d38b8d988b72add3acc5/62fcae8f003ceb4d8adb0fb8_Sentinel-1B-image2-earth-blox.png)
+
+From: Ian H. Woodhouse from Earthblox, ["The impact of the Sentinel-1B failure and looking forward to Sentinel-1C"](https://www.earthblox.io/blog/the-impact-of-the-sentinel-1b-failure-and-looking-forward-to-sentinel-1c), 2022.
+
 # Sentinel-2 Quick Facts
 
 :::: {.columns}
