@@ -3072,7 +3072,7 @@ vertical-align: -.125em;
 <p>We will obtain our area of interest with the <code>osmdata</code> package.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 405 error last time tested</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>aoi <span class="ot">=</span> <span class="fu">getbb</span>(<span class="st">&quot;poznan poland&quot;</span>, <span class="at">format_out =</span> <span class="st">&quot;sf_polygon&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>aoi <span class="ot">=</span> <span class="fu">getbb</span>(<span class="st">&quot;poznan poland&quot;</span>, <span class="at">format_out =</span> <span class="st">&quot;sf_polygon&quot;</span>, <span class="at">limit =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## backup geojson</span></span>

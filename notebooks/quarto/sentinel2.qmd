@@ -36,7 +36,7 @@ We will obtain our area of interest with the `osmdata` package.
 ```{r}
 #| eval: false
 ## 405 error last time tested
-aoi = getbb("poznan poland", format_out = "sf_polygon")
+aoi = getbb("poznan poland", format_out = "sf_polygon", limit = 1)
 ```
 
 ```{r}
