@@ -8,6 +8,8 @@ format:
     embed-resources: true
 editor: visual
 eval: false
+editor_options: 
+  chunk_output_type: inline
 ---
 
 ## Accessing data via STAC APIs
@@ -27,6 +29,7 @@ library(osmdata) # retrieving OSM data, AOI bounding box
 library(rstac) # connecting to the STAC API
 library(sf) # handle geospatial data frames
 library(stars) # handle spatio-temporal arrays
+library(tmap) # visualization
 ```
 
 ### Defining an extent
@@ -47,8 +50,8 @@ aoi = read_sf(here("data/poznan.geojson"))
 We can make sure the AOI is correct (run cell on source .qmd)
 
 ```{r}
-#| eval: false
-mapview::mapview(aoi)
+tmap_mode("view")
+qtm(aoi, fill = 'orange', fill.alpha = 0.3)
 ```
 
 And lastly the time extent:
@@ -60,10 +63,13 @@ time_extent = c("2022-04-01", "2022-10-01")
 We compute the bounding box both in EPSG:4326 and EPSG:3857.
 
 ```{r}
-bb4326 = st_bbox(aoi)
-bb3857 = aoi |> 
+(bb4326 = st_bbox(aoi))
+```
+
+```{r}
+(bb3857 = aoi |> 
   st_transform(3857) |> 
-  st_bbox()
+  st_bbox())
 ```
 
 ### Querying data with `rstac`
@@ -105,6 +111,10 @@ We can explore the items as `sf` objects:
 
 ```{r}
 (i = items_as_sf(items))
+```
+
+```{r}
+glimpse(i)
 ```
 
 And easily view the cloud cover for the area:
@@ -174,12 +184,6 @@ To view the data, we create a `cube_view()` object considering the AOI defined b
 
 Arguments `dx` and `dy` define the spatial resolution of our output, while `dt` corresponds to the temporal resolution.
 
-::: callout-note
-#### Quiz
-
-How would you define a biweekly temporal interval? Hint `?cube_view()`.
-:::
-
 ```{r}
 v = cube_view(
   srs = "EPSG:3857",  
@@ -193,13 +197,22 @@ v = cube_view(
   aggregation = "median",
   resampling = "average"
 )
+v
 ```
+
+::: callout-note
+#### Quiz
+
+How would you define a biweekly temporal interval? Hint `?cube_view()`.
+:::
+
+#### Cloud masking
 
 A cloud mask can also be defined. This will be based on the SCL values.
 
 For that let's first expand on [SCL](https://sentinels.copernicus.eu/web/sentinel/technical-guides/sentinel-2-msi/level-2a/algorithm-overview), which is the result of the Sentinel-2 scene classification.
 
-We will use the `stars` package to visualize the layer. But first we let's select an item with moderate cloud cover to have an idea of the values present.
+We will use the `stars` package to visualize the layer. But first, let's select an item with moderate cloud cover to have an idea of the values present.
 
 ```{r}
 ids = i |> 
@@ -245,12 +258,21 @@ S2.mask = image_mask("SCL", values=c(3,8,9))
 Finally, we can visualize a median composite of our collection. This particular chunk will take a while since the data is fetched from the cloud before plotting. For this reason we include the `gdalcubes_options(parallel = 4)` line which would use any parallel processing available in your system. We will run this code chunk interactively.
 
 ```{r}
-#| eval: false
 gdalcubes_options(parallel = 4) 
-raster_cube(col, v, mask = S2.mask) |> 
+rgb_mean = raster_cube(col, v, mask = S2.mask) |> 
     select_bands(c("B02","B03","B04")) |> 
-    reduce_time(c("median(B02)", "median(B03)", "median(B04)")) |> 
-    plot(rgb = 3:1, zlim=c(0,1800)) 
+    reduce_time(c("median(B02)", "median(B03)", "median(B04)")) 
+rgb_mean
+```
+
+```{r}
+#| eval: false
+rgb_mean |> 
+    plot(rgb = 3:1, zlim=c(0,1200)) 
+```
+
+```{r}
+knitr::include_graphics(here("figs/bkp_sen2_gdalcubes.png"))
 ```
 
 ### Downloading data
