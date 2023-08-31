@@ -1,5 +1,7 @@
 # Tools and packages to query and process Sentinel-1 and Sentinel-2 data with R and Python
 
+## [OpenGeoHub Summer School Poznan 2023](https://opengeohub.org/summer-school/opengeohub-summer-school-poznan-2023/)
+
 Wednesday, Aug. 31th & Sept. 1st 2023
 
 ## Part 1: Thu. 31.08. - 13h30-15h00
