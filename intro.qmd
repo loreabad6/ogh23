@@ -18,21 +18,23 @@ title-slide-attributes:
 
 **Part 1 (Thu. 31.08. - 13h30-15h00)**
 
-- Quick intro slides 
-- Hands-on: Exploring Sentinel-1 data with Python
-- Questions and exercises
+-   Quick intro slides
+-   Hands-on: Exploring Sentinel-1 data with Python
+-   Questions and exercises
 
 **Part 2 (Fri. 01.09. - 09h00-10h30)**
 
-- Hands-on: Exploring Sentinel-2 data with R and Python
-- Questions and exercises
+-   Hands-on: Exploring Sentinel-2 data with R and Python
+-   Questions and exercises
 
+# Tools and packages to query and process Sentinel-1 ~~and Sentinel-2~~ data with ~~R and~~ Python
 
 # Sentinel missions
-- Part of the [Copernicus Programme](https://en.wikipedia.org/wiki/Copernicus_Programme) from ESA.
-- Free and open data policy.
 
-![[](https://www.nature.com/articles/508160a)](https://media.springernature.com/lw703/springer-static/image/art%3A10.1038%2F508160a/MediaObjects/41586_2014_Article_BF508160a_Figc_HTML.png?as=webp)
+-   Part of the [Copernicus Programme](https://en.wikipedia.org/wiki/Copernicus_Programme) from ESA.
+-   Free and open data policy.
+
+![[ ](https://www.nature.com/articles/508160a)](https://media.springernature.com/lw703/springer-static/image/art%3A10.1038%2F508160a/MediaObjects/41586_2014_Article_BF508160a_Figc_HTML.png?as=webp)
 
 ::: aside
 © Nature magazine
@@ -40,21 +42,17 @@ title-slide-attributes:
 
 # Sentinel-1 Quick Facts
 
-:::: {.columns}
-
+::: columns
 ::: {.column width="40%"}
-- Synthetic-aperture radar (SAR) is a form of radar that is used to create 2D images or 3D reconstructions of objects, such as landscapes.
-- It has four operational/acquisition modes and four types of data products.
-- One satellite in orbit, one defected, two more should be operational in 2024.
+-   Synthetic-aperture radar (SAR) is a form of radar that is used to create 2D images or 3D reconstructions of objects, such as landscapes.
+-   It has four operational/acquisition modes and four types of data products.
+-   One satellite in orbit, one defected, two more should be operational in 2024.
 :::
 
 ::: {.column width="60%"}
-
 ![](https://sentinel.esa.int/documents/247904/4603794/Sentinel-1-Infographic.jpg)
 :::
-
-::::
-
+:::
 
 Read more: [ESA website](https://sentinels.copernicus.eu/web/sentinel/missions/sentinel-1) and [Wikipedia entry](https://en.wikipedia.org/wiki/Sentinel-1)
 
@@ -70,29 +68,28 @@ From: Ian H. Woodhouse from Earthblox, ["The impact of the Sentinel-1B failure a
 
 From: Ian H. Woodhouse from Earthblox, ["The impact of the Sentinel-1B failure and looking forward to Sentinel-1C"](https://www.earthblox.io/blog/the-impact-of-the-sentinel-1b-failure-and-looking-forward-to-sentinel-1c), 2022.
 
-::: {.notes}
+::: notes
 Gap over Russia is political, not operational...
 :::
 
+# Let's get to it!
+
+# Tools and packages to query and process ~~Sentinel-1 and~~ Sentinel-2 data with R and Python
 
 # Sentinel-2 Quick Facts
 
-:::: {.columns}
-
+::: columns
 ::: {.column width="40%"}
-- High spatial resolution (10m-60m) optical imagery systematically acquired over land and coastal waters.
-- Two satellites are in orbit (A and B) and a third one (Sentinel-C) will be launched in 2024.
-- Multispectral data with 13 bands in the visible, near infrared, and short wave infrared part of the spectrum.
+-   High spatial resolution (10m-60m) optical imagery systematically acquired over land and coastal waters.
+-   Two satellites are in orbit (A and B) and a third one (Sentinel-C) will be launched in 2024.
+-   Multispectral data with 13 bands in the visible, near infrared, and short wave infrared part of the spectrum.
 :::
 
 ::: {.column width="60%"}
 ![](https://sentinels.copernicus.eu/documents/247904/4180891/Sentinel-2-infographic-tm.jpg)
-
+:::
 :::
 
-::::
-
 Read more: [ESA website](https://sentinels.copernicus.eu/web/sentinel/missions/sentinel-2) and [Wikipedia entry](https://en.wikipedia.org/wiki/Sentinel-2).
-
 
 # Let's get to it!
