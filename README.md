@@ -2,6 +2,8 @@
 
 ## [OpenGeoHub Summer School Poznan 2023](https://opengeohub.org/summer-school/opengeohub-summer-school-poznan-2023/)
 
+Intro slides [here](https://loreabad6.github.io/ogh23/intro.html).
+
 Wednesday, Aug. 31th & Sept. 1st 2023
 
 ## Part 1: Thu. 31.08. - 13h30-15h00
