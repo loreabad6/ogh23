@@ -1,5 +1,7 @@
 # Tools and packages to query and process Sentinel-1 and Sentinel-2 data with R and Python
 
+See a summary blogpost here: <https://loreabad6.github.io/posts/2023-10-17-stac-across-languages/>
+
 ## [OpenGeoHub Summer School Poznan 2023](https://opengeohub.org/summer-school/opengeohub-summer-school-poznan-2023/)
 
 Intro slides [here](https://loreabad6.github.io/ogh23/intro.html).
